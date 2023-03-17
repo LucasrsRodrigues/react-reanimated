@@ -9,6 +9,8 @@ import { QuizCard } from '../../components/QuizCard';
 
 import { styles } from './styles';
 import { QUIZZES } from '../../data/quizzes';
+import Animated, { FadeIn, FlipInYLeft, RotateInUpLeft, SlideOutLeft, ZoomOut } from 'react-native-reanimated';
+import { Button } from '../../components/Button';
 
 export function Home() {
   const [quizzes, setQuizzes] = useState(QUIZZES);
@@ -32,6 +34,8 @@ export function Home() {
     setQuizzes(QUIZZES.filter(quiz => levels.includes(quiz.level)));
   }, [levels]);
 
+  const [show, setShow] = useState(false);
+
   return (
     <View style={styles.container}>
       <Header
@@ -50,8 +54,9 @@ export function Home() {
       <FlatList
         data={quizzes}
         keyExtractor={item => item.id}
-        renderItem={({ item }) => (
+        renderItem={({ item, index }) => (
           <QuizCard
+            index={index}
             data={item}
             onPress={() => navigate('quiz', { id: item.id })}
           />
